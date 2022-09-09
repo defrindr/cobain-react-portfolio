@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function Footer() {
     // get year now
@@ -15,7 +14,7 @@ export default function Footer() {
 
     return (
         <>
-            <div className="container">
+            <div className="container" style={{ overflow: "auto" }}>
                 <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
                     <p className="col-md-12 mb-0 text-muted text-center">{copyright}</p>
                 </footer>

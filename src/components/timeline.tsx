@@ -67,7 +67,7 @@ export default function Timeline(children: ITimeline): JSX.Element {
                         return (
                             <li className="timeline-item mb-5" key={index}>
                                 <h5 className="fw-bold display-6">{item.title}</h5>
-                                <p className="text-dark display-7">{item.subtitle}</p>
+                                <p className="display-7">{item.subtitle}</p>
                                 <p className="p-0 pb-3 m-0 text-secondary display-7 fw-light">{displayTime}</p>
                                 {
                                     item.description &&

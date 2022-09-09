@@ -1,69 +1,54 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ContextWebInfo } from "../../contexts/context-web-info";
 import { MainLayout } from "../../layouts";
 
 export default function Kontak(): JSX.Element {
-    const socialMedia = [
-        {
-            name: "Github",
-            url: "https://github.com/defrindr",
-            icon: "fab fa-github"
-        },
-        {
-            name: "Linkedin",
-            url: "https://linkedin.com/in/defrindr",
-            icon: "fab fa-linkedin"
-        },
-        {
-            name: "Instagram",
-            url: "https://instagram.com/defrindr",
-            icon: "fab fa-instagram"
-        },
-        {
-            name: "Facebook",
-            url: "https://facebook.com/defrindr",
-            icon: "fab fa-facebook"
-        }
-    ];
+    const context = useContext(ContextWebInfo);
+    const contactWebInfo = context.webInfo.contactpage;
+    const socialMedia = contactWebInfo.social_account;
+    const emailList = contactWebInfo.email_bussiness;
     return (
         <MainLayout>
-            <div className="container">
+            <div className="container" style={{ minHeight: 'calc(100vh - 160px)' }}>
                 <div className="row">
                     <div className="col-md-4 offset-md-1 mt-2">
-                        <img src="/images/contact.jpg" alt="Contact" className="img img-fluid" style={{ border: 'none' }} />
+                        <img src={contactWebInfo.image} alt="Contact" className="img img-fluid" style={{ border: 'none' }} />
                     </div>
-                    <div className="col-md-6 mt-5">
-                        <p className="display-6 mb-3">Hi, Defri here. The best way to contact me depends upon the nature of your inquiry. So…</p>
+                    <div className="col-md-6 mt-5  align-self-center">
+                        <p className="display-6 mb-3">{contactWebInfo.intro}</p>
                     </div>
-                    <div className="col-md-8 mt-3">
+                    <div className="col-md-7 mt-3">
                         <h3 className="display-4">
-                            <strong>Social</strong>
+                            <strong>{contactWebInfo.social_title}</strong>
                         </h3>
                         <p>
-                            I'm always open to new opportunities and new ideas.
+                            {contactWebInfo.social_description}
                         </p>
                         <div className="row">
                             {socialMedia.map((item, index) => (
                                 <div className="col-sm-6 mb-4" key={index}>
-                                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="mybtn btn-block">
+                                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="btn mybtn btn-block">
                                         <i className={item.icon}></i> {item.name}
                                     </a>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="col-md-4 mt-3">
+                    <div className="col-md-5 mt-3">
                         <h3 className="display-4">
-                            <strong>Bussiness</strong>
+                            <strong>{contactWebInfo.email_title}</strong>
                         </h3>
                         <p>
-                            You also can contact me via email.
+                            {contactWebInfo.email_description}
                         </p>
                         <div className="row">
-                            <div className="col-md-6 mb-4">
-                                <a href="mailto:defrindr@gmail.com" className="mybtn btn-block">
-                                    <i className="fas fa-envelope"></i> Email Me
-                                </a>
-                            </div>
+                            {emailList.map((item, index) => (
+                                <div className="col-sm-6 mb-4" key={index}>
+                                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="btn mybtn btn-block">
+                                        <i className={item.icon}></i> {item.name}
+                                    </a>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

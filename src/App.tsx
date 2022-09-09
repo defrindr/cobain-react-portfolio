@@ -1,46 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from 'react-router-dom';
-import { ContextWebInfo } from './contexts/context-web-info';
-
-import {
-  Beranda,
-  TentangSaya,
-  Portofolio,
-  Kontak
-} from './pages';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ContextWebInfo, IContextWebInfo, ContextWebInfoProps } from './contexts/context-web-info';
+import { Helper, Constant } from './helpers';
+import MyRoutes from './routes/my-routes';
 
 function App(): JSX.Element {
-  const [webInfo, setWebInfo] = useState(null);
+  const { THEME_HAPPYTHEME } = Constant;
+  const [data, setData] = useState<IContextWebInfo>(ContextWebInfoProps);
+  const [theme, setTheme] = useState(THEME_HAPPYTHEME);
 
-  const getWebInfo = async () => {
+  const getTheme = useCallback(async () => {
+    // load theme from local storage
+    const theme = localStorage.getItem('theme') ?? data.theme;
+    setTheme(theme);
+  }, [data]);
+
+  const getData = async () => {
     try {
       // load json from data directory
       const response = await fetch('./data/site.json');
-      const data = await response.json();
-      setWebInfo(data);
+      let text = await response.text();
+      let data: IContextWebInfo = Helper.Deserialize(text);
+
+      setData(data);
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    getWebInfo();
+    getData();
   }, []);
 
+  useEffect(() => {
+    getTheme();
+  }, [getTheme]);
+
   return (
-    <ContextWebInfo.Provider value={{webInfo}}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Beranda />} />
-          <Route path="/tentang-saya" element={<TentangSaya />} />
-          <Route path="/portofolio" element={<Portofolio />} />
-          <Route path="/kontak" element={<Kontak />} />
-        </Routes>
-      </BrowserRouter>
+    <ContextWebInfo.Provider value={{
+      webInfo: data.webInfo,
+      theme: theme,
+      setTheme: setTheme,
+    }}>
+      <MyRoutes />
     </ContextWebInfo.Provider>
   );
 }

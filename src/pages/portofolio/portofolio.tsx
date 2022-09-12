@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import Carousel from "../../components/carousel";
-import Modal from "../../components/modal";
+import { Modal, MyImage } from "../../components";
 import { ContextWebInfo, IPortfolio } from "../../contexts/context-web-info";
 import { MainLayout } from "../../layouts";
 import DetailPortofolio from "./detail-portofolio";
@@ -35,7 +34,9 @@ export default function Portofolio(): JSX.Element {
             sortedPortfolio.map((item, index) => (
                 <div className="col-lg-4 col-md-6 mb-3 mr-3" key={index}>
                     <div className="card">
-                        <Carousel id={index} items={item.carausel} />
+                        <MyImage className="mycardimage justify-content-center carousel-item active vh-45"
+                            src={item.carausel[0]} alt={item.name}
+                            style={{ border: 'none', height: 'auto!important' }} />
                         <div className="card-body">
                             <h5 className="card-title">{item.name}</h5>
                             <p className="card-text">{item.role}</p>
